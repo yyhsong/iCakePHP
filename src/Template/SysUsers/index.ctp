@@ -19,19 +19,31 @@
 			</div>
 		</div>
 		<div class="box-body no-padding table-responsive">
-			<!--<?= $this->Form->create(null, ['novalidate' => 'novalidate', 'class' => 'hidden-xs hidden-sm']); ?>
+			<?= $this->Form->create($searchEntity, ['url' => ['action' => 'index'], 'novalidate' => 'novalidate', 'class' => 'hidden-xs hidden-sm']); ?>
 			<table class="table table-search">
 				<tr>
-					<td class="left">Name</td>
+					<td class="left">角色</td>
 					<td>
-						<?= $this->Form->control('name', ['label' => false, 'class' => 'form-control']); ?>
+						<?= $this->Form->control('sys_role_id', ['label' => false, 'options' => $sysRoles, 'empty' => true, 'class' => 'form-control']); ?>
+					</td>
+					<td class="left">账号</td>
+					<td>
+						<?= $this->Form->control('account', ['label' => false, 'class' => 'form-control']); ?>
+					</td>
+					<td class="left">姓名</td>
+					<td>
+						<?= $this->Form->control('realname', ['label' => false, 'class' => 'form-control']); ?>
+					</td>
+					<td class="left">状态</td>
+					<td>
+						<?= $this->Form->control('status', ['label' => false, 'options' => $status, 'empty' => true, 'class' => 'form-control']); ?>
 					</td>
 					<td class="right">
 						<?= $this->Form->button(__('查询'), ['class' => 'btn btn-skin btn-sm']); ?>
 					</td>
 				</tr>
 			</table>
-			<?= $this->Form->end(); ?>-->
+			<?= $this->Form->end(); ?>
 				
 			<table class="table table-striped">
 		        <tbody>

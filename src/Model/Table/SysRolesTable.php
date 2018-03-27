@@ -37,6 +37,12 @@ class SysRolesTable extends Table
 		$this->hasMany('SysUsers', [
             'foreignKey' => 'sys_role_id'
         ]);
+		
+		$this->belongsToMany('SysMenus', [
+			'foreignKey' => 'sys_role_id',
+			'targetForeignKey' => 'sys_menu_id',
+			'joinTable' => 'sys_roles_menus'
+		]);
     }
 
     /**

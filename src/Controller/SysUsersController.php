@@ -38,8 +38,29 @@ class SysUsersController extends AppController
      */
     public function index()
     {
+    	//处理查询条件
+    	$searchEntity = $this->SysUsers->newEntity();
+		$searchConditions = [];
+		if($this->request->is(['post'])) {
+			$searchData = $this->request->getData();
+			$searchEntity = $this->SysUsers->patchEntity($searchEntity, $searchData);
+			if($searchData['sys_role_id']) {
+				$searchConditions['SysUsers.sys_role_id'] = $searchData['sys_role_id'];
+			}
+			if($searchData['account']) {
+				$searchConditions['SysUsers.account LIKE'] = '%'.$searchData['account'].'%';
+			}
+			if($searchData['realname']) {
+				$searchConditions['SysUsers.realname LIKE'] = '%'.$searchData['realname'].'%';
+			}
+			if($searchData['status']) {
+				$searchConditions['SysUsers.status'] = $searchData['status'];
+			}
+		}
+		
     	$query = $this->SysUsers
     				->find()
+					->where($searchConditions)
 					->matching('SysRoles', function($q) {
 						return $q->where([
 							'code !=' => 'administrator'
@@ -52,8 +73,10 @@ class SysUsersController extends AppController
 					]);
 		
         $sysUsers = $this->paginate($query);
-
-        $this->set(compact('sysUsers'));
+		
+		$sysRoles = $this->SysUsers->SysRoles->find('list', ['conditions' => ['status' => 1]]);
+		$status = $this->status;
+        $this->set(compact('searchEntity', 'sysUsers', 'sysRoles', 'status'));
         $this->set('_serialize', ['sysUsers']);
     }
 

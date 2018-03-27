@@ -32,15 +32,8 @@ class SysUser extends Entity
      * @var array
      */
     protected $_accessible = [
-        'sys_role_id' => true,
-        'account' => true,
-        'pwt' => true,
-        'realname' => true,
-        'phone' => true,
-        'status' => true,
-        'created' => true,
-        'modified' => true,
-        'sys_role' => true
+        '*' => true,
+        'id' => false
     ];
 	
 	/**

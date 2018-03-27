@@ -146,6 +146,7 @@ class SysRolesController extends AppController
 					'_ids' => $menu_ids
 				]
 			]);
+			
 			if($this->SysRoles->save($sysRole)) {
 				$this->Flash->success('设置权限成功！');
 				return $this->redirect(['action' => 'index']);

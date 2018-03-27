@@ -4,14 +4,22 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * SysRole Entity
+ * SysMenu Entity
  *
  * @property int $id
- * @property string $code
  * @property string $name
- * @property int $status
+ * @property string $controller
+ * @property string $action
+ * @property string $icon
+ * @property int $parent_id
+ * @property int $lft
+ * @property int $rght
+ * @property int $level
+ *
+ * @property \App\Model\Entity\ParentSysMenu $parent_sys_menu
+ * @property \App\Model\Entity\ChildSysMenu[] $child_sys_menus
  */
-class SysRole extends Entity
+class SysMenu extends Entity
 {
 
     /**
@@ -24,7 +32,14 @@ class SysRole extends Entity
      * @var array
      */
     protected $_accessible = [
-        '*' => true,
+		'*' => true,
         'id' => false
     ];
+	
+	/**
+	 * 设置虚拟字段
+	 */
+	protected function _getMenuHash() {
+		return $this->_properties['controller'].'-'.$this->_properties['action'];
+	}
 }
