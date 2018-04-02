@@ -25,7 +25,9 @@ class SysUsersTableTest extends TestCase
      */
     public $fixtures = [
         'app.sys_users',
-        'app.sys_roles'
+        'app.sys_roles',
+        'app.sys_menus',
+        'app.sys_roles_menus'
     ];
 
     /**
@@ -78,6 +80,16 @@ class SysUsersTableTest extends TestCase
      * @return void
      */
     public function testBuildRules()
+    {
+        $this->markTestIncomplete('Not implemented yet.');
+    }
+
+    /**
+     * Test findAuth method
+     *
+     * @return void
+     */
+    public function testFindAuth()
     {
         $this->markTestIncomplete('Not implemented yet.');
     }

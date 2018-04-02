@@ -5,7 +5,7 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
-		<title>用户登录 - 般若项目管理平台</title>
+		<title>用户登录 - CakePHP种子项目</title>
 		<?= $this->Html->meta('icon') ?>
 	    <?= $this->Html->css([
 	    	'pc/bootstrap.min.css', 
@@ -29,16 +29,18 @@
 	
 	<body class="hold-transition login-page">
 		<div class="login-box">
-		    <div class="login-logo">般若项目管理平台</div>
+		    <div class="login-logo">CakePHP种子项目</div>
 	      	<div class="login-box-body">
 	        	<p class="login-box-msg">用户登录</p>
 				<?= $this->Form->create() ?>
 		          	<div class="form-group has-feedback">
-		            	<?= $this->Form->control('account', ['label' => false, 'class' => 'form-control', 'placeholder' => '账号']) ?>
+		            	<?= $this->Form->control('account', ['label' => false, 'class' => 'form-control', 
+		            		'placeholder' => '账号', 'value' => 'Neo']) ?>
 		            	<span class="fa fa-user form-control-feedback"></span>
 		          	</div>
 		          	<div class="form-group has-feedback">
-		            	<?= $this->Form->control('pwt', ['type' => 'password', 'label' => false, 'class' => 'form-control', 'placeholder' => '密码']) ?>
+		            	<?= $this->Form->control('pwt', ['type' => 'password', 'label' => false, 
+		            		'class' => 'form-control', 'placeholder' => '密码', 'value' => 'abc123']) ?>
 		            	<span class="fa fa-lock form-control-feedback"></span>
 		          	</div>
 		            <!--<div class="form-group row checkcode-row">

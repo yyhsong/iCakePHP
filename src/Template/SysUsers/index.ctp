@@ -16,6 +16,7 @@
 			<h3 class="box-title">用户列表</h3>
 			<div class="box-tools">
 				<?= $this->Html->link('新增', ['action' => 'add'], ['class' => 'btn btn-skin btn-sm']) ?>
+				<?= $this->Html->link('导出Excel', ['action' => 'export'], ['class' => 'btn btn-skin btn-sm']) ?>
 			</div>
 		</div>
 		<div class="box-body no-padding table-responsive">
@@ -49,18 +50,25 @@
 		        <tbody>
 			        <tr>
 						<th><?= $this->Paginator->sort('id', '#') ?></th>
+						<th><?= $this->Paginator->sort('headpic', '头像') ?></th>
 						<th><?= $this->Paginator->sort('sys_role_id', '角色') ?></th>
 						<th><?= $this->Paginator->sort('account', '账号') ?></th>
 						<th><?= $this->Paginator->sort('realname', '真实姓名') ?></th>
 						<th><?= $this->Paginator->sort('phone', '手机号') ?></th>
 						<th><?= $this->Paginator->sort('status', '状态') ?></th>
-						<th><?= $this->Paginator->sort('modified', '最后更新') ?></th>
 						<th class="actions"><?= __('操作') ?></th>		
 					</tr>
 		        
 	            	<?php foreach ($sysUsers as $sysUser): ?>
 		            <tr>
 		                <td><?= h($sysUser->id) ?></td>
+		                <td>
+		                	<?php if($sysUser->headpic) : ?>
+		                		<img src="<?= $this->Url->build('/upload/headpic/'.$sysUser->headpic) ?>" class='thumb-img circle-img' />
+		                	<?php else:  ?>
+		                		<img src="<?= $this->Url->build('/img/user-default.png') ?>" class='thumb-img circle-img' />
+		                	<?php endif; ?>
+		                </td>
 		                <td><?= $sysUser->has('sys_role') ? $sysUser->sys_role->name : '' ?></td>
 		                <td><?= h($sysUser->account) ?></td>
 		                <td><?= h($sysUser->realname) ?></td>
@@ -68,7 +76,6 @@
 		                <td>
 		                	<?= $this->element('status', ['status' => $sysUser->status]) ?>
 		                </td>
-		                <td><?= h($sysUser->modified) ?></td>
 			            <td class="actions">
 		                    <?= $this->Html->link(__('详情'), ['action' => 'view', $sysUser->id]) ?>
 		                    <?= $this->Html->link(__('编辑'), ['action' => 'edit', $sysUser->id]) ?>

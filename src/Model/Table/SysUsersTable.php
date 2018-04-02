@@ -39,6 +39,17 @@ class SysUsersTable extends Table
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
+		$this->addBehavior('Josegonzalez/Upload.Upload', [
+            'headpic' => [
+            	'path' => 'webroot{DS}upload{DS}headpic',
+            	'nameCallback' => function($data, $settings) {
+            		$file_arr = explode('.', $data['name']);
+					$file_suffix = end($file_arr);
+            		$file_name = date('YmdHis').rand(100,999).'.'.$file_suffix;
+            		return $file_name;
+            	}
+            ]
+        ]);
 
         $this->belongsTo('SysRoles', [
             'foreignKey' => 'sys_role_id',
@@ -86,6 +97,9 @@ class SysUsersTable extends Table
             ->requirePresence('status', 'create')
             ->notEmpty('status');
 
+        $validator
+            ->allowEmpty('headpic');
+
         return $validator;
     }
 
@@ -103,13 +117,13 @@ class SysUsersTable extends Table
 
         return $rules;
     }
-
+	
 	/**
 	 * 自定义登录查询
 	 */
 	public function findAuth(\Cake\ORM\Query $query, array $options)
 	{
-	    $query->select(['id', 'account', 'pwt', 'realname', 'phone', 'status', 'sys_role_id'])
+	    $query->select(['id', 'account', 'pwt', 'realname', 'phone', 'status', 'headpic', 'sys_role_id'])
 			//->contain(['SysRoles'])
 	        ->where(['SysUsers.status' => 1]);
 	

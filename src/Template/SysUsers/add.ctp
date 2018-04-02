@@ -12,12 +12,13 @@
 <!-- Main content -->
 <section class="content">
 	<div class="box">
-		<?= $this->Form->create($sysUser) ?>
+		<?= $this->Form->create($sysUser, ['type' => 'file']) ?>
 		<div class="box-body">
 			<div class="row">
 				<div class="col-md-3">
 					<div class="form-group">
-						<?php echo $this->Form->control('sys_role_id', ['label' => '角色', 'options' => $sysRoles, 'class' => 'form-control']); ?>
+						<?php echo $this->Form->control('sys_role_id', ['label' => '角色', 'options' => $sysRoles, 
+							'class' => 'form-control sel2']); ?>
 					</div>
 				</div>
 				<div class="col-md-3">
@@ -37,6 +38,12 @@
 				</div>
 			</div>
 			<div class="row">
+				<div class="col-md-9">
+					<div class="form-group">
+						<?php echo $this->Form->control('headpic', ['type' => 'file', 'label' => '上传头像', 
+							'accept' => 'image/jpeg, image/jpg, image/png', 'class' => 'form-control']); ?>
+					</div>
+				</div>
 				<div class="col-md-3">
 					<div class="form-group">
 						<?php echo $this->Form->control('status', ['label' => '状态', 'options' => $status, 'class' => 'form-control']); ?>
@@ -52,3 +59,10 @@
 	</div>
 </section>
 <!-- /Main content -->
+
+<script type="text/javascript">
+	$(function() {
+		//初始化select2插件
+		$(".sel2").select2();
+	});
+</script>

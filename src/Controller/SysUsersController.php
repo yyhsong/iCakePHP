@@ -39,7 +39,7 @@ class SysUsersController extends AppController
     public function index()
     {
     	//处理查询条件
-    	$searchEntity = $this->SysUsers->newEntity();
+    	$searchEntity = $this->SysUsers->newEntity(['status' => '0']);
 		$searchConditions = [];
 		if($this->request->is(['post'])) {
 			$searchData = $this->request->getData();
@@ -164,6 +164,56 @@ class SysUsersController extends AppController
         }
         return $this->redirect(['action' => 'index']);
     }
+	
+	/**
+	 * 导出Excel
+	 */
+	public function export() {
+		$this->render(false);
+		
+		$exportData = $this->SysUsers->find('all', [
+			'contain' => ['SysRoles'],
+			'order' => [
+				'SysUsers.sys_role_id' => 'ASC',
+        		'SysUsers.status' => 'ASC',
+        		'SysUsers.id' => 'ASC'
+			]
+		])->map(function($row) {
+			$status = '未知';	
+			if($row->status == 1) {
+				$status = '启用';
+			}else if($row->status == 2) {
+				$status = '禁用';
+			}
+			
+			return [
+				$row->id,
+				$row->sys_role ? $row->sys_role->name : '',
+				$row->account,
+				$row->realname,
+				$row->phone,
+				$row->headpic ? '✔' : '',
+				$status
+			];
+		})->toArray();
+		
+		//设置列title
+		array_unshift($exportData, [
+			'#',
+			'角色',
+			'账号',
+			'真实姓名',
+			'手机号',
+			'头像',
+			'状态'
+		]);
+		
+		//导出Excel
+		$sheetName = '系统用户';
+		$excelName = $sheetName.'_'.date('Ymd');
+		$this->loadComponent('PHPExcel');
+		$this->PHPExcel->export($exportData, $sheetName, $excelName);
+	}
 
 	/**
 	 * 用户登录
@@ -179,13 +229,13 @@ class SysUsersController extends AppController
 				$role = $this->SysUsers->SysRoles->get($user['sys_role_id'], [
 					'fields' => ['id', 'name', 'code'],
 					'contain' => [
-//						'SysMenus' => function($q) {
-//							return $q->find('children', [
-//									 	'for' => 1,
-//									 ])
-//									 ->contain(['ChildSysMenus'])
-//									 ->find('threaded');
-//						}
+						'SysMenus' => function($q) {
+							return $q->find('children', [
+									 	'for' => 1,
+									 ])
+									 ->contain(['ChildSysMenus'])
+									 ->find('threaded');
+						}
 					]
 				]);
 				$user = array_merge($user, [
@@ -194,11 +244,10 @@ class SysUsersController extends AppController
 				]);
 				$this->request->session()->write('User', $user);
 				//把拥有访问权限的菜单放入session
-				//$this->request->session()->write('Menus', $role->sys_menus);
+				$this->request->session()->write('Menus', $role->sys_menus);
 				
 	            return $this->redirect($this->Auth->redirectUrl());
 	        }
-	        //$this->Flash->error('账号或密码错误！');
 	        $this->set('loginError', '账号或密码错误！');
 	    }
 	}

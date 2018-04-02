@@ -14,6 +14,7 @@ use Cake\Auth\DefaultPasswordHasher;
  * @property string $realname
  * @property string $phone
  * @property int $status
+ * @property $headpic
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
  *
@@ -31,7 +32,7 @@ class SysUser extends Entity
      *
      * @var array
      */
-    protected $_accessible = [
+   	protected $_accessible = [
         '*' => true,
         'id' => false
     ];

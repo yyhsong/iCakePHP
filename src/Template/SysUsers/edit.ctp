@@ -12,7 +12,7 @@
 <!-- Main content -->
 <section class="content">
 	<div class="box">
-		<?= $this->Form->create($sysUser) ?>
+		<?= $this->Form->create($sysUser, ['type' => 'file']) ?>
 		<div class="box-body">
 			<div class="row">
 				<div class="col-md-3">
@@ -37,6 +37,17 @@
 				</div>
 			</div>
 			<div class="row">
+				<div class="col-md-9">
+					<div class="form-group">
+						<?php echo $this->Form->control('headpic', ['type' => 'file', 'label' => '上传头像', 
+							'accept' => 'image/jpeg, image/jpg, image/png', 'class' => 'form-control']); ?>
+						<p class="help-block">
+							<?php if($sysUser->headpic) : ?>
+							<?= $this->Html->link($sysUser->headpic, '/upload/headpic/'.$sysUser->headpic, ['target' => '_blank']); ?>
+							<?php endif; ?>
+						</p>	
+					</div>
+				</div>
 				<div class="col-md-3">
 					<div class="form-group">
 						<?php echo $this->Form->control('status', ['label' => '状态', 'options' => $status, 'class' => 'form-control']); ?>

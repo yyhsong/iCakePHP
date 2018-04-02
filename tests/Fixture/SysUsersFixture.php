@@ -24,6 +24,7 @@ class SysUsersFixture extends TestFixture
         'realname' => ['type' => 'string', 'length' => 20, 'null' => false, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'phone' => ['type' => 'string', 'length' => 20, 'null' => true, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'status' => ['type' => 'integer', 'length' => 1, 'unsigned' => false, 'null' => false, 'default' => '1', 'comment' => '', 'precision' => null, 'autoIncrement' => null],
+        'headpic' => ['type' => 'upload.file', 'length' => 100, 'null' => true, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'created' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
         'modified' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
         '_constraints' => [
@@ -50,8 +51,9 @@ class SysUsersFixture extends TestFixture
             'realname' => 'Lorem ipsum dolor ',
             'phone' => 'Lorem ipsum dolor ',
             'status' => 1,
-            'created' => '2018-03-26 18:00:18',
-            'modified' => '2018-03-26 18:00:18'
+            'headpic' => '',
+            'created' => '2018-04-02 11:49:46',
+            'modified' => '2018-04-02 11:49:46'
         ],
     ];
 }

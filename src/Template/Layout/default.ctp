@@ -5,7 +5,7 @@
 	    <meta charset="utf-8" />
 	    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 	    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
-	    <title>般若项目管理平台</title>
+	    <title>CakePHP种子项目</title>
 	    <?= $this->Html->meta('icon') ?>
 	    <?= $this->Html->css([
 	    	'pc/bootstrap.min.css', 
@@ -28,6 +28,7 @@
 			'pc/plugins/datepicker.min.js', 
 			'pc/plugins/clockpicker.min.js', 
 			'pc/plugins/select2.min.js',
+			'pc/plugins/print.min.js',
 			'pc/app.js'
 		]);
 		?>
@@ -62,12 +63,24 @@
 			            <ul class="nav navbar-nav">
 			                <li class="dropdown user user-menu">
 				                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-				                    <?php echo $this->Html->image('user.png', ['alt'=>'', 'class'=>'user-image']) ?>
+				                    <?php
+				                    	if($this->request->session()->read('User')['headpic']) {
+				                    		echo $this->Html->image('/upload/headpic/'.$this->request->session()->read('User')['headpic'], ['alt'=>'', 'class'=>'user-image']);
+				                    	}else {
+				                    		echo $this->Html->image('user.png', ['alt'=>'', 'class'=>'user-image']);
+				                    	}
+				                    ?>
 				                    <span class="hidden-xs"><?= h($this->request->session()->read('User')['account']) ?></span>
 				                </a>
 				                <ul class="dropdown-menu">
 				                    <li class="user-header">
-					                    <?php echo $this->Html->image('user.png', ['alt'=>'', 'class'=>'image-circle']) ?>
+				                    	<?php
+					                    	if($this->request->session()->read('User')['headpic']) {
+					                    		echo $this->Html->image('/upload/headpic/'.$this->request->session()->read('User')['headpic'], ['alt'=>'', 'class'=>'user-circle']);
+					                    	}else {
+					                    		echo $this->Html->image('user.png', ['alt'=>'', 'class'=>'user-circle']);
+					                    	}
+					                    ?>
 					                    <p>
 					                        <?= h($this->request->session()->read('User')['realname']) ?>
 					                        <small><?= h($this->request->session()->read('User')['rolename']) ?></small>
@@ -171,7 +184,7 @@
 		        <div class="pull-right hidden-xs">
 		          	版本 V0.0
 		        </div>
-		        Copyright &copy; 2018 <a href="#">般若工作室</a> 版权所有
+		        Copyright &copy; 2018 <a href="#">般若</a> 版权所有
       		</footer>
       		<!-- /Main Footer -->
       		
@@ -252,23 +265,23 @@
 		<script type="text/javascript">
 			$(function() {
 				//设置选中菜单
-//				var ctrl = "$ctrl";
-//				var hash = "$hash";
-//				$(".sidebar-menu .active").removeClass("active");
-//				if($("[data-ctrl='"+ctrl+"']").length == 1) {
-//					$("[data-ctrl='"+ctrl+"']").addClass("active").parents(".treeview").addClass("active");
-//				}else {
-//					if($("[data-hash='"+hash+"']").length == 1) {
-//						$("[data-hash='"+hash+"']").addClass("active").parents(".treeview").addClass("active");
-//						//如果是三级菜单
-//						if($("[data-hash='"+hash+"']").data("level") == 3) {
-//							$("[data-hash='"+hash+"']").parents(".treeview-menu").addClass("menu-open active").show();
-//						}
-//					}else {
-//						var url_hash = window.location.hash.split("#")[1];
-//						$("[data-hash='"+url_hash+"']").addClass("active").parents(".treeview").addClass("active");
-//					}
-//				}
+				var ctrl = "<?= $ctrl ?>";
+				var hash = "<?= $hash ?>";
+				$(".sidebar-menu .active").removeClass("active");
+				if($("[data-ctrl='"+ctrl+"']").length == 1) {
+					$("[data-ctrl='"+ctrl+"']").addClass("active").parents(".treeview").addClass("active");
+				}else {
+					if($("[data-hash='"+hash+"']").length == 1) {
+						$("[data-hash='"+hash+"']").addClass("active").parents(".treeview").addClass("active");
+						//如果是三级菜单
+						if($("[data-hash='"+hash+"']").data("level") == 3) {
+							$("[data-hash='"+hash+"']").parents(".treeview-menu").addClass("menu-open active").show();
+						}
+					}else {
+						var url_hash = window.location.hash.split("#")[1];
+						$("[data-hash='"+url_hash+"']").addClass("active").parents(".treeview").addClass("active");
+					}
+				}
 				
 				//修改密码
 				$("#pwtModal").on("show.bs.modal", function() {

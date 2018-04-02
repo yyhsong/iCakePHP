@@ -16,10 +16,13 @@
 			<h3 class="box-title">树形视图</h3>
 			<div class="box-tools">
 				<?= $this->Html->link('列表视图', ['action' => 'index'], ['class' => 'btn btn-skin btn-sm']) ?>
+				<a href="#" class="btn btn-skin btn-sm" id="printBtn">
+					<i class="fa fa-print"></i> 打印
+				</a>
 			</div>
 		</div>
 		<div class="box-body">
-			<div class="menu-list">
+			<div class="menu-list" id="printDiv">
 				<?= $this->element('tree', ['nodes' => $sysMenus]) ?>
 			</div>
 		</div>
@@ -29,3 +32,13 @@
 	</div>	
 </section>
 <!-- /Main content -->
+
+<script type="text/javascript">
+	$(function() {
+		//打印
+		$("#printBtn").on("click", function(e) {
+			e.preventDefault();
+			$("#printDiv").print();
+		});
+	});
+</script>
